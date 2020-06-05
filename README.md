@@ -6,6 +6,10 @@ Example:
   
   https://www.cardkingdom.com/catalog/search?filter%5Bipp%5D=20&filter%5Bsort%5D=price_asc&filter%5Bname%5D=Marchesa+the+Black+Rose
   
+  Marchesa, the Black Rose
+  
+  Commander 2017 (M)
+  
   Cheapest price at the highest grade is:  $4.99
   
   There are currently 2 in stock
