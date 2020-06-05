@@ -5,33 +5,33 @@
 import webbrowser, requests, os, sys
 from bs4 import BeautifulSoup
 
+#input from command line
 card = '+'.join(sys.argv[1:])
-#url = 'https://www.cardkingdom.com/catalog/search?filter%5Bipp%5D=20&filter%5Bsort%5D=price_asc&filter%5Bname%5D=birds+of+paradise'
+
+#create url with card name and print it. Filtered by lowest-highest price
 url = 'https://www.cardkingdom.com/catalog/search?filter%5Bipp%5D=20&filter%5Bsort%5D=price_asc&filter%5Bname%5D=' + card
 print(url)
+
+#go to url and make sure it is valid
 res = requests.get(url)
 res.raise_for_status()
 
 soup = BeautifulSoup(res.text, features='html.parser')
 
-#print(soup)
+#grab the html of the amount and price of the cards listed
+card_data = soup.find_all('div', {'class': 'amtAndPrice'})
 
-target = soup.find_all('div', {'class': 'amtAndPrice'})
-#target_text = [span.get_text() for span in target]
-#print(target)
-#amount = target(class_ = 'styleQty')
-#print("Here's the quantity")
-#print(amount.get_text())
-for targets in target :
-    #print(targets)
-    amount = targets.find(class_ = 'styleQty')
-    #print(amount.get_text())
-    #break
-#   print(amount)
+#loop through the
+for card in card_data :
+    #set amount of each card on each loop
+    amount = card.find(class_ = 'styleQty')
+
+    #if the amount is not 0, print the price and amount, then exit program
     if str(amount.get_text()) != '0' :
         print('Cheapest price at the highest grade is: '
-            + targets.find(class_ = 'stylePrice').get_text() +
+            + card.find(class_ = 'stylePrice').get_text() +
             'There are currently ' + amount.get_text() + ' in stock')
-        #print(targets.parent.parent.parent.parent.find(class_ = 'productDetailSet'))
         sys.exit(0)
+
+#if looped through and all cards have quantity of 0, this is the message
 print('Sorry, that card is not currently available on CardKingdom')
