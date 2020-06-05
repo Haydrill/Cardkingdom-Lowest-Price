@@ -19,19 +19,24 @@ res.raise_for_status()
 soup = BeautifulSoup(res.text, features='html.parser')
 
 #grab the html of the amount and price of the cards listed
-card_data = soup.find_all('div', {'class': 'amtAndPrice'})
+card_data = soup.find_all('div', {'class': 'itemContentWrapper'})
+second_data = soup.find_all('div', {'class': 'amtAndPrice'})
 
 #loop through the
-for card in card_data :
+for card, second in zip(card_data, second_data) :
     #set amount of each card on each loop
-    amount = card.find(class_ = 'styleQty')
+    amount = second.find(class_ = 'styleQty')
 
     #if the amount is not 0, print the price and amount, then exit program
-    if str(amount.get_text()) != '0' :
+    if str(second.get_text()) != '0' :
         print('Cheapest price at the highest grade is: '
-            + card.find(class_ = 'stylePrice').get_text() +
-            'There are currently ' + amount.get_text() + ' in stock')
+             + second.find(class_ = 'stylePrice').get_text() +
+             'There are currently ' + amount.get_text() + ' in stock')
+        card_name = card.find('span', {'class': 'productDetailTitle'})
+        set = card.find('div', {'class': 'productDetailSet'})
+        print(set.get_text() + card_name.get_text())
         sys.exit(0)
+    sys.exit(0)
 
 #if looped through and all cards have quantity of 0, this is the message
 print('Sorry, that card is not currently available on CardKingdom')
