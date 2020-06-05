@@ -29,14 +29,13 @@ for card, second in zip(card_data, second_data) :
 
     #if the amount is not 0, print the price and amount, then exit program
     if str(second.get_text()) != '0' :
-        print('Cheapest price at the highest grade is: '
-             + second.find(class_ = 'stylePrice').get_text() +
-             'There are currently ' + amount.get_text() + ' in stock')
         card_name = card.find('span', {'class': 'productDetailTitle'})
         set = card.find('div', {'class': 'productDetailSet'})
-        print(set.get_text() + card_name.get_text())
+        print(card_name.get_text() + set.get_text().rstrip('\n'))
+        print('\bCheapest price at the highest grade is: '
+             + second.find(class_ = 'stylePrice').get_text() +
+             'There are currently ' + amount.get_text() + ' in stock')
         sys.exit(0)
-    sys.exit(0)
 
 #if looped through and all cards have quantity of 0, this is the message
 print('Sorry, that card is not currently available on CardKingdom')
