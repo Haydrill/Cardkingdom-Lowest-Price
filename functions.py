@@ -60,19 +60,24 @@ def SCGamesScrape(input) :
     #go to url and make sure it is properly rendered with sleep
     session = HTMLSession()
     scg = session.get(url)
-    scg.html.render(sleep=3)
+    scg.html.render(sleep=2)
 
     # find every row of the table
     card_data = scg.html.find('tr')
+    price = scg.html.find('p.product-price.sort-name')
+    # print(card_data[:5])
+    print(price[0].text)
     scg.close()
 
-    # loop through the table and find first card with same name and is in stock
-    for card in card_data[1:] :
-        if input in card.text :
-            if 'Qty: Out of Stock' not in card.text :
-                print(card.text)
-                sys.exit(0)
-    print('Sorry, that card was not found on StarCityGames...')
+    # cheapest_card = 'Sorry, that card was not found on StarCityGames'
+    # # loop through the table and find first card with same name and is in stock
+    # for card in card_data[1:] :
+    #     if input in card.text :
+    #         if 'Qty: Out of Stock' not in card.text :
+    #             # cheapest_card.append(card.text)
+    #             # print(card.text)
+    #             # sys.exit(0)
+    # print('Sorry, that card was not found on StarCityGames...')
 ## END OF SCGamesScrape
 
 # def TCGPlayerScrape(input) :
