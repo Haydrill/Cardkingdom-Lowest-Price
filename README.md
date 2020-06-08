@@ -1,6 +1,9 @@
 # Cardkingdom-Lowest-Price
 This python project is a tool that allows the input of a Magic: the Gathering card name in the command line, searches for it on Cardkingdom, and prints the lowest price at NM for that card.
 
+As of 6/7/20, I am extending the project to other popular MtG card sites (StarCityGames, TCGPlayer, Channel Fireball). Currently working on StarCityGames integration.
+
+
 Example:
   python main.py Marchesa the Black Rose
   
