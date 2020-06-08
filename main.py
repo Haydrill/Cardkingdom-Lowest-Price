@@ -37,11 +37,12 @@ for card in card_amt_and_qty :
 
     # remove punctation, make uppercase, compare card names, print if same
     if input.replace(',' , '').upper() in card_name.replace(',' , '').upper() :
-        print('Card found!\n')
-        print(card_name)
-        print(card_set)
-        print(card.text)
-        sys.exit(0)
+        if '0' not in card.text :
+            print('Card found!\n')
+            print(card_name)
+            print(card_set)
+            print(card.text)
+            sys.exit(0)
 
 # if looped through and all cards have quantity of 0, this is the message
 print('Sorry, that card is not currently available on CardKingdom')
