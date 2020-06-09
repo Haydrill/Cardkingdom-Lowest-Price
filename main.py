@@ -5,8 +5,8 @@
 import sys, functions
 
 #input from command line
-#input = ' '.join(sys.argv[1:])
-input = 'The Ozolith'
+input = ' '.join(sys.argv[1:])
+# input = 'The Ozolith'
 functions.CardKingdomScrape(input)
 functions.SCGamesScrape(input)
 # functions.TCGPlayerScrape(input)

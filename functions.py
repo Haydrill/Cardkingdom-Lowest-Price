@@ -8,6 +8,7 @@ from requests_html import HTMLSession
 from time import sleep
 
 def CardKingdomScrape(input) :
+    print('\nChecking CardKingdom for:' , input, '...')
 
     #create url with card name and print it. Filtered by lowest-highest price
     url = 'https://www.cardkingdom.com/catalog/search?filter%5Bipp%5D=20&filter%5Bsort%5D=price_asc&filter%5Bname%5D='
@@ -52,27 +53,46 @@ def CardKingdomScrape(input) :
 ## END OF CardKingdomScrape
 
 def SCGamesScrape(input) :
+    print('\nChecking StarCityGames for:', input, '...')
+
     #create url with card name and print it. Filtered by lowest-highest price
     url = 'https://starcitygames.com/search.php?search_query='
     url = url + input
     print(url)
 
-    #go to url and make sure it is properly rendered with sleep
+    #go to url and render html (using sleep to ensure full render)
     session = HTMLSession()
     scg = session.get(url)
-    scg.html.render(sleep=3)
+    scg.html.render(sleep=1)
 
-    # find every row of the table
-    card_data = scg.html.find('tr')
+    # find all card_names, sets, prices, and quantities
+    card_name = scg.html.find('.listItem-details')
+    card_set = scg.html.find('.category-row-name-search')
+    card_qty = scg.html.find('td.\-\-Stock')
+    card_price = scg.html.find('p.product-price.sort-name')
     scg.close()
 
-    # loop through the table and find first card with same name and is in stock
-    for card in card_data[1:] :
-        if input in card.text :
-            if 'Qty: Out of Stock' not in card.text :
-                print(card.text)
-                sys.exit(0)
-    print('Sorry, that card was not found on StarCityGames...')
+    # loop through the cards and find cheapest card that matches input
+    index_tracker = 0
+    cheapest_index = None
+    for name, qty in zip(card_name, card_qty) :
+        if input.replace(',' ,'').upper() in name.text.replace(',' ,'').upper() :
+            if 'Out of Stock' not in qty.text :
+                if cheapest_index is None :
+                    cheapest_index = index_tracker
+                elif card_price[index_tracker].text > card_price[cheapest_index].text :
+                    cheapest_index = index_tracker
+        index_tracker += 1
+
+    if cheapest_index is not None :
+        print('Card found!\n')
+        print(card_name[cheapest_index].text)
+        print(card_set[cheapest_index].text)
+        print(card_qty[cheapest_index].text, 'available @' ,
+            card_price[cheapest_index].text)
+    else :
+        print('Sorry, card was not found on StarCityGames...')
+
 ## END OF SCGamesScrape
 
 # def TCGPlayerScrape(input) :
