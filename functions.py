@@ -62,17 +62,12 @@ def SCGamesScrape(input) :
     scg = session.get(url)
     scg.html.render(sleep=2)
 
-    # find every row of the table
+    # find all card_names, sets, prices, and quantities
     card_data = scg.html.find('tr')
     card_price = scg.html.find('p.product-price.sort-name')
     card_name = scg.html.find('.listItem-details')
     card_set = scg.html.find('.category-row-name-search')
-    card_qty = scg.html.find('.-Stock')
-    # print(card_data[:5])
-    # print(card_price.text)
-    # print(card_name[0].text.replace('\n', '  '))
-    # print(card_set[0].text)
-    print(card_qty[0].text)
+    card_qty = scg.html.find('td.\-\-Stock')
     scg.close()
 
     # cheapest_card = 'Sorry, that card was not found on StarCityGames'
