@@ -46,6 +46,7 @@ def CardKingdomScrape(input) :
                 print(card_set)
                 print(card.text)
                 found = True
+                return
 
     # if looped through and all cards have quantity of 0, this is the message
     if found is False :
