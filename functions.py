@@ -32,21 +32,21 @@ def CardKingdomScrape(input) :
 
     # loop through each card, check if correct name, and print first one (cheapest)
     for card in card_amt_and_qty :
-        set_tracker //= 4
-        current_card = card_name_and_sets[set_tracker]
+        current_card = card_name_and_sets[int(set_tracker/4)]
 
         card_name = current_card.find('.productDetailTitle', first=True).text
         card_set = current_card.find('.productDetailSet', first=True).text
-
         # remove punctation, make uppercase, compare card names, print if amt != 0
         if input.replace(',' , '').upper() in card_name.replace(',' , '').upper() :
-            if '0' not in card.text :
+            if '0 available' not in card.text :
                 print('Card found!\n')
                 print(card_name)
                 print(card_set)
                 print(card.text)
                 found = True
                 return
+
+        set_tracker += 1
 
     # if looped through and all cards have quantity of 0, this is the message
     if found is False :
@@ -63,8 +63,12 @@ def SCGamesScrape(input) :
 
     #go to url and render html (using sleep to ensure full render)
     session = HTMLSession()
-    scg = session.get(url)
-    scg.html.render(sleep=1)
+    try :
+        scg = session.get(url)
+    except :
+        print('Sorry, SCGames was taking too long to load...')
+        return
+    scg.html.render(sleep = 2)
 
     # find all card_names, sets, prices, and quantities
     card_name = scg.html.find('.listItem-details')
@@ -74,16 +78,23 @@ def SCGamesScrape(input) :
     scg.close()
 
     # loop through the cards and find cheapest card that matches input
-    index_tracker = 0
+    # use two index values to track current and cheapest price indexes
+    # also edits input/card name to be as identical as possible
+    current_index = 0
     cheapest_index = None
     for name, qty in zip(card_name, card_qty) :
         if input.replace(',' ,'').upper() in name.text.replace(',' ,'').upper() :
             if 'Out of Stock' not in qty.text :
+                try :
+                    cheapest_price = card_price[cheapest_index].text.strip('$')
+                    current_price = card_price[current_index].text.strip('$')
+                except :
+                    pass # this prices are used to keep the elif concise, they don't work on first loop because of None
                 if cheapest_index is None :
-                    cheapest_index = index_tracker
-                elif card_price[index_tracker].text > card_price[cheapest_index].text :
-                    cheapest_index = index_tracker
-        index_tracker += 1
+                    cheapest_index = current_index
+                elif float(current_price) < float(cheapest_price) :
+                    cheapest_index = current_index
+        current_index += 1
 
     if cheapest_index is not None :
         print('Card found!\n')
