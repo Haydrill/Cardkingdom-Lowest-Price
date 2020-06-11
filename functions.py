@@ -68,38 +68,32 @@ def SCGamesScrape(input) :
     except :
         print('Sorry, SCGames was taking too long to load...')
         return
-    scg.html.render(sleep=1)
+    scg.html.render(sleep = 2)
 
     # find all card_names, sets, prices, and quantities
     card_name = scg.html.find('.listItem-details')
     card_set = scg.html.find('.category-row-name-search')
     card_qty = scg.html.find('td.\-\-Stock')
     card_price = scg.html.find('p.product-price.sort-name')
-    # print(card_price)
     scg.close()
 
     # loop through the cards and find cheapest card that matches input
+    # use two index values to track current and cheapest price indexes
+    # also edits input/card name to be as identical as possible
     current_index = 0
     cheapest_index = None
-    # cheapest_price = None #card_price[cheapest_index].text
-    # current_price = None
-    # print(current_price)
     for name, qty in zip(card_name, card_qty) :
         if input.replace(',' ,'').upper() in name.text.replace(',' ,'').upper() :
             if 'Out of Stock' not in qty.text :
                 try :
                     cheapest_price = card_price[cheapest_index].text.strip('$')
                     current_price = card_price[current_index].text.strip('$')
-                    print(card_price[cheapest_index].text.strip('$'))
-                    print(card_price[current_index].text.strip('$'))
                 except :
-                    # print(cheapest_price , ' ', current_price)
-                    pass
+                    pass # this prices are used to keep the elif concise, they don't work on first loop because of None
                 if cheapest_index is None :
                     cheapest_index = current_index
                 elif float(current_price) < float(cheapest_price) :
                     cheapest_index = current_index
-                # print(card_price[current_index].text, ' ', card_price[cheapest_index].text)
         current_index += 1
 
     if cheapest_index is not None :
