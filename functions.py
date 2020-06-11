@@ -63,7 +63,11 @@ def SCGamesScrape(input) :
 
     #go to url and render html (using sleep to ensure full render)
     session = HTMLSession()
-    scg = session.get(url)
+    try :
+        scg = session.get(url)
+    except :
+        print('Sorry, SCGames was taking too long to load...')
+        return
     scg.html.render(sleep=1)
 
     # find all card_names, sets, prices, and quantities
@@ -71,19 +75,32 @@ def SCGamesScrape(input) :
     card_set = scg.html.find('.category-row-name-search')
     card_qty = scg.html.find('td.\-\-Stock')
     card_price = scg.html.find('p.product-price.sort-name')
+    # print(card_price)
     scg.close()
 
     # loop through the cards and find cheapest card that matches input
-    index_tracker = 0
+    current_index = 0
     cheapest_index = None
+    # cheapest_price = None #card_price[cheapest_index].text
+    # current_price = None
+    # print(current_price)
     for name, qty in zip(card_name, card_qty) :
         if input.replace(',' ,'').upper() in name.text.replace(',' ,'').upper() :
             if 'Out of Stock' not in qty.text :
+                try :
+                    cheapest_price = card_price[cheapest_index].text.strip('$')
+                    current_price = card_price[current_index].text.strip('$')
+                    print(card_price[cheapest_index].text.strip('$'))
+                    print(card_price[current_index].text.strip('$'))
+                except :
+                    # print(cheapest_price , ' ', current_price)
+                    pass
                 if cheapest_index is None :
-                    cheapest_index = index_tracker
-                elif card_price[index_tracker].text > card_price[cheapest_index].text :
-                    cheapest_index = index_tracker
-        index_tracker += 1
+                    cheapest_index = current_index
+                elif float(current_price) < float(cheapest_price) :
+                    cheapest_index = current_index
+                # print(card_price[current_index].text, ' ', card_price[cheapest_index].text)
+        current_index += 1
 
     if cheapest_index is not None :
         print('Card found!\n')
