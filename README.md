@@ -10,19 +10,29 @@ Demonstration:
   USER INPUT : main.py Marchesa, the Black Rose
   OUTPUT : 
   Checking CardKingdom for: Marchesa, the Black Rose ...
+  
   https://www.cardkingdom.com/catalog/search?filter%5Bipp%5D=20&filter%5Bsort%5D=price_asc&filter%5Bname%5D=Marchesa,+the+Black+Rose
+  
   Searching for card...
+  
   Card found!
 
   Marchesa, the Black Rose
+  
   Commander 2017 (M)
+  
   1 available @ $4.99
 
   Checking StarCityGames for: Marchesa, the Black Rose ...
+  
   https://starcitygames.com/search.php?search_query=Marchesa, the Black Rose
+  
   Card found!
 
   Marchesa, the Black Rose
+  
   English
+  
   Conspiracy: 2014 Edition
+  
   Qty: 19 available @ $2.45
