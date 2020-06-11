@@ -32,21 +32,21 @@ def CardKingdomScrape(input) :
 
     # loop through each card, check if correct name, and print first one (cheapest)
     for card in card_amt_and_qty :
-        set_tracker //= 4
-        current_card = card_name_and_sets[set_tracker]
+        current_card = card_name_and_sets[int(set_tracker/4)]
 
         card_name = current_card.find('.productDetailTitle', first=True).text
         card_set = current_card.find('.productDetailSet', first=True).text
-
         # remove punctation, make uppercase, compare card names, print if amt != 0
         if input.replace(',' , '').upper() in card_name.replace(',' , '').upper() :
-            if '0' not in card.text :
+            if '0 available' not in card.text :
                 print('Card found!\n')
                 print(card_name)
                 print(card_set)
                 print(card.text)
                 found = True
                 return
+
+        set_tracker += 1
 
     # if looped through and all cards have quantity of 0, this is the message
     if found is False :
