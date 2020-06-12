@@ -3,7 +3,7 @@ This python project is a tool that allows the input of a Magic: the Gathering ca
 
 Disclaimer : I use CardKingdom's price filter, so it might not return the very cheapest version but will return the cheapest version at the highest grade.
 
-As of 6/7/20, I am extending the project to other popular MtG card sites (StarCityGames, TCGPlayer, Channel Fireball). Finished SCG (hopefully). Currently working on TCGPlayer integration.
+As of 6/7/20, I am extending the project to other popular MtG card sites (StarCityGames, TCGPlayer, Channel Fireball). Finished SCG, TCG (hopefully). Currently working on ChannelFireball integration.
 
 
 Demonstration:
