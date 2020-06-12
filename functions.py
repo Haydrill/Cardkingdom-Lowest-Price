@@ -107,12 +107,26 @@ def SCGamesScrape(input) :
 
 ## END OF SCGamesScrape
 
-# def TCGPlayerScrape(input) :
+def TCGPlayerScrape(input) :
 #     #create url with card name and print it. Filtered by lowest-highest price
 #     url = 'https://www.tcgplayer.com/search/magic/product?productLineName=magic&q='
 #     url = url + input + '&page=1&productTypeName=Cards'
 #     print(url)
-#
+
+    print('\nChecking TCGPlayer for:', input, '...')
+
+    #create url with card name and print it. Filtered by lowest-highest price
+    url = 'https://www.tcgplayer.com/search/all/product?q='
+    url = url + input + '&page=1'
+    print(url)
+
+    session = HTMLSession()
+    tcg = session.get(url)
+    tcg.html.render(sleep = 2)
+
+    cards = tcg.html.find('.search-result__product')
+    print(cards[0].text)
+
 #     #go to url and make sure it is valid
 #     res = requests.get(url)
 #     res.raise_for_status()
