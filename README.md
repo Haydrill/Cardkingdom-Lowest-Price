@@ -23,6 +23,20 @@ Demonstration:
   
   1 available @ $4.99
 
+  Checking TCGPlayer for: Marchesa, the Black Rose ...
+  
+  https://www.tcgplayer.com/search/magic/product?productLineName=magic&q=Marchesa the Black Rose&page=1
+  
+  Card found!
+
+  Magic: The Gathering Conspiracy
+  
+  Mythic · #49
+  
+  Marchesa, the Black Rose 59 Listings As low as $2.75
+  
+  Market Price: $2.77
+
   Checking StarCityGames for: Marchesa, the Black Rose ...
   
   https://starcitygames.com/search.php?search_query=Marchesa, the Black Rose

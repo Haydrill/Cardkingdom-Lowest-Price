@@ -8,5 +8,5 @@ import sys, functions
 input = ' '.join(sys.argv[1:])
 # input = 'The Ozolith'
 functions.CardKingdomScrape(input)
+functions.TCGPlayerScrape(input)
 functions.SCGamesScrape(input)
-# functions.TCGPlayerScrape(input)
