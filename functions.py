@@ -134,3 +134,19 @@ def TCGPlayerScrape(input) :
     if found is False :
         print('Sorry, card was not found on TCGplayer...')
         return
+
+def ChannelFireballScrape(input) :
+    print('\nChecking Channel Fireball for:', input, '...')
+
+    #create url with card name and print it. Filtered by lowest-highest price
+    url = 'https://store.channelfireball.com/products/search?q='
+    url = url + input.replace(',' , '') + '&c=1'
+    print(url)
+
+    # go to tcgplayer, search with price filter, and grab all cards presented
+    session = HTMLSession()
+    cb = session.get(url)
+    # print(cb.html.text)
+    cards = cb.html.find('.inner')
+    print(cards[1].text)
+    cb.close()
