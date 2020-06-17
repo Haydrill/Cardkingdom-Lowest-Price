@@ -23,6 +23,12 @@ Demonstration:
   
   1 available @ $4.99
 
+  Checking Channel Fireball for: Marchesa, the Black Rose ...
+
+  https://store.channelfireball.com/products/search?q=Marchesa the Black Rose&c=1
+
+  Sorry, card was not found on ChannelFireball...
+
   Checking TCGPlayer for: Marchesa, the Black Rose ...
   
   https://www.tcgplayer.com/search/magic/product?productLineName=magic&q=Marchesa the Black Rose&page=1
